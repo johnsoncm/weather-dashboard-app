@@ -1,24 +1,38 @@
 // var searchBtn = document.getElementById('searchBtn');
 // var tableBody = document.getElementById('table-body');
 
-var searchButton  = $('#searchBtn');
+var searchButton  = $('.search-button');
 var tableBody = $('#table-body');
 var weatherCards = $('#weather-cards');
 var resultsBlock = $('.mr-0');
 var resultsTemp = $('#temperature');
 var resultsFeels = $('#feels-like');
 var resultsHumidity = $('#humidity')
-var windSpeed = $('#wind-speed');
+var resultsWind = $('#wind-speed');
+var searchInput = $('#city-input');
 
 
 
 
 
-function getApi(){
+function getParams(){
+    var searchParamsArr = document.location.search.split('&');
+
+    var query = searchParamsArr[0].split('=').pop();
+    var format = searchParamsArr[1].split('=').pop();
+
+    getApi(query, format);
+}
+
+
+
+function getApi(query, format){
     // api key 363dbc272863bed129cf4807c0a7c46a
 
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=Richmond&appid=44fc04aab9d8e095d4cc9144a46cd661'
+    var location = searchInput.val();
 
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+ location +'&appid=363dbc272863bed129cf4807c0a7c46a'
+console.log(requestUrl);
 
     //fetch request gets data from open weather api
     fetch(requestUrl)
@@ -27,13 +41,9 @@ function getApi(){
 
     })
     .then(function(data){
-        console.log(data)
+        console.log("data",data);
 
-       //VALUES NEEDED TO PARSE AND POPULATE CARDS 
-        // wind.speed
-        // main.humidity
-        // main.temp
-        // main.feels_like
+   
 
 
 
@@ -48,39 +58,57 @@ function getApi(){
         //     tableData.appendChild(link);
         //     createTableRow.appendChild(tableData);
         //     tableBody.appendChild(createTableRow);
-        // }
-    })
+        });
+//     })
          
 };
-getApi();
-// searchBtn.addEventListener('click' , getApi);
 
+    //VALUES NEEDED TO PARSE AND POPULATE CARDS 
+        // wind.speed
+        // main.humidity
+        // main.temp
+        // main.feels_like
+
+
+
+// displayResults(); {
+
+//     // var resultCard = $('<div>');
+//     // resultCard.addClass('.city-name');
+
+//     // resultCard //creates a div
+//     // resultsBlock//references mr-0 class
+//     // resultBody//creates a div
+//     // resultObj//equals titleEl.textContent
+//     // bodyContentEl
+
+
+
+//     // resultsBlock.innerHTML = '';
+//     // for (var i = 0; i < locRes.results.length; i++) {
+
+//     // }
+
+// };
 
 
 $('#weather-cards').css('display','none');
-// weatherCards.style.display = "none";
-// $('searchBtn').css('display', 'none');
+
 $('.mr-0').css('display','none');
 
-// resultsBlock.style.display = "none";
 
 
 //When the Start button is clicked the questions and choices are displayed and the start button as well as the text disappear. The countdown begins.
-searchButton.addEventListener("click", () => {
-    //function that gets api when search button is clicked executes here
-    // weatherCards.style.display = "block"
+searchButton.on("click", () => {
     getApi();
-    $('#weather-cards').css('display','block');
-    $('.mr-0').css('display','block');
-    // weatherCards.style.display = "block";
-    // resultsBlock.style.display = "block";
+    
+    //function that gets api when search button is clicked executes here
 
-    // $('searchBtn').css('display', 'block');
+    getApi();
+    $('#weather-cards').css('display','flex','row');
+    $('.mr-0').css('display','flex','');
+// document.ready();
 
-    // btn.style.display = "none";
-    // container.style.display = "none";
-    // questionPlaceholder.style.display = "block";
-    // displayChoice.style.display = "block";
-    // startQuestions();
+
 
 });
