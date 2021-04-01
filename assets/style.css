@@ -1,6 +1,7 @@
 
 * {
     font-family:'Roboto';
+    
 }
 
 
@@ -62,4 +63,5 @@
 .mr-0{
     display: flex;
     flex-direction:initial;
+    background:transparent;
 }
